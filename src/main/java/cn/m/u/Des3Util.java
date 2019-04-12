@@ -8,6 +8,10 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 
+import com.sun.xml.internal.messaging.saaj.packaging.mime.util.BASE64DecoderStream;
+
+import sun.misc.BASE64Encoder;
+
 public class Des3Util {
 
 	// 密钥 长度不得小于24
@@ -36,6 +40,7 @@ public class Des3Util {
 		cipher.init(Cipher.ENCRYPT_MODE, deskey, ips);
 		byte[] encryptData = cipher.doFinal(plainText.getBytes(encoding));
 		return Base64.getEncoder().encodeToString(encryptData);
+		
 	}
 
 	/**
