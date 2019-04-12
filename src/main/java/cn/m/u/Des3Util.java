@@ -1,17 +1,12 @@
 package cn.m.u;
 
 import java.security.Key;
+import java.util.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
 import javax.crypto.spec.IvParameterSpec;
-
-
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-
-
 
 public class Des3Util {
 
@@ -40,8 +35,7 @@ public class Des3Util {
 		IvParameterSpec ips = new IvParameterSpec(iv.getBytes());
 		cipher.init(Cipher.ENCRYPT_MODE, deskey, ips);
 		byte[] encryptData = cipher.doFinal(plainText.getBytes(encoding));
-//		return Base64.encode(encryptData);
-		return new BASE64Encoder().encode(encryptData);
+		return Base64.getEncoder().encodeToString(encryptData);
 	}
 
 	/**
@@ -61,8 +55,7 @@ public class Des3Util {
 		IvParameterSpec ips = new IvParameterSpec(iv.getBytes());
 		cipher.init(Cipher.DECRYPT_MODE, deskey, ips);
 
-//		byte[] b_ = Base64.decode(encryptText);
-		byte[] b_ = new BASE64Decoder().decodeBuffer(encryptText);
+		byte[] b_ = Base64.getDecoder().decode(encryptText);
 		if(null != b_){
 			byte[] decryptData = cipher.doFinal(b_);
 			return new String(decryptData, encoding);
@@ -71,7 +64,7 @@ public class Des3Util {
 	}
 
 	public static void main(String args[]) throws Exception {
-		String str = "{\"deviceId\":\"79802537\",\"deviceType\":\"ios\",\"cityLcode\":\"320400\",\"version\":\"1.0.0\",\"clientTime\":\"147987314\",\"phone\":\"15312584242\"}";
+		String str = "{\"deviceId\":\"79802537\",\"deviceType\":\"ios\",\"cityLcode\":\"320400\",\"version\":\"1.0.0\",\"clientTime\":\"147987314\",\"phone\":\"15312584242\",\"pwd\":\"123456\"}";
 		System.out.println("----加密前-----：" + str);
 		
 		String encodeStr = Des3Util.encode(str);
