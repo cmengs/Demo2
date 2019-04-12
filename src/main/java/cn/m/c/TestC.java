@@ -14,10 +14,12 @@ public class TestC {
 		return "hello";
 	}
 	
-	//TODO 这是一个bug
+	//TODO 修复bug
 	@RequestMapping("/hello1")
 	public String hello1(@RequestParam(name="message",required=false) String message){
-		return message + "您输入的字符个数："+message.length();
+		int count = null != message ? message.length() : 0;
+		return message + "您输入的字符个数："+ count;
+		//return message + "您输入的字符个数："+ message.length();
 	}
 	
 	
