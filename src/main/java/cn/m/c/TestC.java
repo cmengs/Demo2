@@ -22,5 +22,9 @@ public class TestC {
 		//return message + "您输入的字符个数："+ message.length();
 	}
 	
-	
+	//TODO 新功能开发完毕
+	@RequestMapping("/hello2")
+	public String hello2() {
+		return "新功能开发完毕";
+	}
 }
