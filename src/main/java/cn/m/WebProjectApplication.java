@@ -2,12 +2,14 @@ package cn.m;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
- * spring boot∆Ù∂Ø¿‡
+ * spring bootÂêØÂä®Á±ª
  * @author Administrator
  *
  */
+@ComponentScan("cn.m.*")
 @SpringBootApplication
 public class WebProjectApplication {
 
