@@ -1,19 +1,19 @@
 package cn.m.c;
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.m.u.entry.SystemParam;
 
 @Controller
 @ResponseBody
 public class TestC {
 	
 	@RequestMapping("/login")
-	public String login(SystemParam systemParam){
-		return "登陆成功,传入的用户名密码分别是："+systemParam.getPhone() + "/" +systemParam.getPwd();
+	public String login(String json){
+		return "登陆成功,传入的用户名密码分别是："+json;
 	}
 
 	@RequestMapping("/hello")
@@ -34,4 +34,5 @@ public class TestC {
 	public String hello2() {
 		return "新功能开发完毕";
 	}
+	
 }

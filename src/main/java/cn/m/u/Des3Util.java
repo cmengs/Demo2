@@ -3,14 +3,14 @@ package cn.m.u;
 import java.security.Key;
 import java.util.Base64;
 
+//import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+//import org.apache.commons.codec.binary.Base64;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 
-import com.sun.xml.internal.messaging.saaj.packaging.mime.util.BASE64DecoderStream;
-
-import sun.misc.BASE64Encoder;
 
 public class Des3Util {
 
@@ -70,10 +70,15 @@ public class Des3Util {
 
 	public static void main(String args[]) throws Exception {
 		String str = "{\"deviceId\":\"79802537\",\"deviceType\":\"ios\",\"cityLcode\":\"320400\",\"version\":\"1.0.0\",\"clientTime\":\"147987314\",\"phone\":\"15312584242\",\"pwd\":\"123456\"}";
+	//	String str = "{\"deviceId\":\"79802537\",\"deviceType\":\"ios\",\"cityLcode\":\"320400\",\"version\":\"1.0.0\",\"clientTime\":\"147987314\",\"id\":\"1\"}";
+	//	String str = "{\"deviceId\":\"79802537\",\"deviceType\":\"ios\",\"cityLcode\":\"320400\",\"version\":\"1.0.0\",\"clientTime\":\"147987314\",\"currentPage\":1,\"pageSize\":1}";
 		System.out.println("----加密前-----：" + str);
 		
 		String encodeStr = Des3Util.encode(str);
 		System.out.println("----加密后-----：" + encodeStr);
 		System.out.println("----解密后-----：" + Des3Util.decode(encodeStr));
+		
+		
+		
 	}
 }

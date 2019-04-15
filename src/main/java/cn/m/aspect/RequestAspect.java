@@ -1,7 +1,6 @@
 package cn.m.aspect;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -12,12 +11,12 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import com.alibaba.fastjson.JSONObject;
 import cn.m.u.Des3Util;
+import cn.m.u.Util;
 import cn.m.u.entry.SystemParam;
 
 /**
  * 切面
  * @author Administrator
- *
  */
 @Aspect
 @Component
@@ -35,17 +34,25 @@ public class RequestAspect {
 			String paramValue = null;
 			try{
 				paramValue = paramMap.get("data")[0]; //获得data值
-			}catch(NullPointerException e){return "非法请求!";}
+			}catch(NullPointerException e){return "非法请求!";} //data是加密后的参数,没有data参数属于非法请求
 			
 			if(null != paramValue){
 				paramValue = Des3Util.decode(paramValue); //通过解密获得json参数
 				if(null != paramValue){
-					SystemParam sysParam = JSONObject.parseObject(paramValue,SystemParam.class);
-					if(!checkParamValue(sysParam)){
+					
+					JSONObject jO = JSONObject.parseObject(paramValue); //解析全部参数
+					SystemParam sysParam = JSONObject.parseObject(paramValue,SystemParam.class); //解析系统级参数
+					
+					if(!Util.checkParamValue(sysParam)){ //验证系统级参数是否正确传入
 						return "请求参数缺失!";
 					}else{
-						if("/login".equals(request.getRequestURI())){
-							return pjd.proceed(new Object[]{sysParam});
+						//循环遍历系统级参数
+						Field[] fields = sysParam.getClass().getDeclaredFields();
+						if(null != fields && fields.length != 0){
+							for (Field field : fields) {
+								jO.remove(field.getName()); //把系统级参数从全部参数里删除，剩下的就是业务参数
+							}
+							return pjd.proceed(new Object[]{jO.toJSONString()}); //返回业务参数
 						}
 					}
 				}
@@ -53,29 +60,5 @@ public class RequestAspect {
 			return "请求参数处理异常!";
 		}
 		return pjd.proceed();
-	}
-	
-	private boolean checkParamValue(SystemParam sysParam) throws NoSuchMethodException, SecurityException, Exception{
-		
-		Class<?> cla = sysParam.getClass();
-		Field[] f_s = cla.getDeclaredFields();
-		Object obj_value = null;
-		if(null != f_s && f_s.length != 0){
-			for (Field field : f_s) {
-				Method m = (Method) sysParam.getClass().getMethod("get" + getMethodName(field.getName()));  
-				obj_value = m.invoke(sysParam);
-				if(null == obj_value) return false;
-			}
-		}else{
-			return false;
-		}
-		return true;
-	}
-	
-	// 把一个字符串的第一个字母大写、效率是最高的、  
-	private static String getMethodName(String fildeName) throws Exception {
-		byte[] items = fildeName.getBytes();
-		items[0] = (byte) ((char) items[0] - 'a' + 'A');
-		return new String(items);
 	}
 }

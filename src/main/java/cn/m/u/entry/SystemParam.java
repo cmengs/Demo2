@@ -7,8 +7,6 @@ public class SystemParam {
 	private String cityLcode;
 	private String version;
 	private String clientTime;
-	private String phone;
-	private String pwd;
 	
 	public String getDeviceId() {
 		return deviceId;
@@ -40,21 +38,9 @@ public class SystemParam {
 	public void setClientTime(String clientTime) {
 		this.clientTime = clientTime;
 	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	public String getPwd() {
-		return pwd;
-	}
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
-	}
 	@Override
 	public String toString() {
 		return "SystemParam [deviceId=" + deviceId + ", deviceType=" + deviceType + ", cityLcode=" + cityLcode
-				+ ", version=" + version + ", clientTime=" + clientTime + ", phone=" + phone + ", pwd=" + pwd + "]";
+				+ ", version=" + version + ", clientTime=" + clientTime + "]";
 	}
 }
