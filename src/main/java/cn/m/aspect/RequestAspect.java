@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -21,6 +23,8 @@ import cn.m.u.entry.SystemParam;
 @Aspect
 @Component
 public class RequestAspect {
+	
+	private static final Logger logger = LoggerFactory.getLogger(RequestAspect.class);
 
 	@Around("execution(* cn.m.c.*.*(..))")
 	public Object checkRequestParam(ProceedingJoinPoint pjd) throws Throwable{
@@ -37,6 +41,18 @@ public class RequestAspect {
 			}catch(NullPointerException e){return "非法请求!";} //data是加密后的参数,没有data参数属于非法请求
 			
 			if(null != paramValue){
+				
+				//如果存在换行
+				if(paramValue.indexOf(" ") != -1){
+					StringBuilder sub = new StringBuilder();
+					
+					String[] strings = paramValue.split(" "); //已换行切割，重新拼接
+					for (String string : strings) {
+						sub.append(string+"+"); //把空格替换为+
+					}
+					paramValue = sub.toString().substring(0, sub.length()-1); //最后会多拼接一个，需要去掉
+				}
+				
 				paramValue = Des3Util.decode(paramValue); //通过解密获得json参数
 				if(null != paramValue){
 					
