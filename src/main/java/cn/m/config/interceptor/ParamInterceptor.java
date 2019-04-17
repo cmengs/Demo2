@@ -2,8 +2,6 @@ package cn.m.config.interceptor;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Field;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,9 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
 
-import cn.m.u.Des3Util;
-import cn.m.u.Util;
-import cn.m.u.entry.SystemParam;
 
 @Component
 public class ParamInterceptor implements HandlerInterceptor {

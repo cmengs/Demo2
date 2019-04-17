@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
@@ -26,6 +25,39 @@ public class TestC1 {
 	
 	@Autowired
 	private HttpServletResponse response;
+	
+	@RequestMapping("/getData")
+	public String getData(String json){
+		JSONObject jO = JSONObject.parseObject(json);
+		Object o =  jO.get("method");
+		if(null != o){
+			if("1".equals(o.toString())){
+				return this.getData1();
+			}
+			if("2".equals(o.toString())){
+				return this.getData2();
+			}
+		}
+		return JSONObject.toJSONString(Util.return_(200, "", null));
+	}
+	
+	private String getData1(){
+		Map map = new HashMap<String,String>();
+		map.put("info", "执行Data1方法");
+		return JSONObject.toJSONString(Util.return_(200, "", map));
+	}
+	
+	private String getData2(){
+		Map map = new HashMap<String,String>();
+		map.put("info", "执行Data2方法");
+		return JSONObject.toJSONString(Util.return_(200, "", map));
+	}
+	
+	
+	
+	
+	
+	
 
 	@RequestMapping("/seleUser")
 	public String seleUser(String json) throws Exception{
@@ -52,7 +84,6 @@ public class TestC1 {
 	public String seleUsers(String json) throws Exception{
 		//设置响应头
 		response.setHeader("accept", "application/json");
-		
 		
 		List list = Arrays.asList(
 				Util.setObjValue(new User("1", "张三", null, true)),
