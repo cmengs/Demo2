@@ -75,9 +75,9 @@ public class Des3Util {
 
 	public static void main(String args[]) throws Exception {
 	//	String str = "{\"deviceId\":\"79802537\",\"deviceType\":\"ios\",\"cityLcode\":\"320400\",\"version\":\"1.0.0\",\"clientTime\":\"147987314\",\"phone\":\"15312584242\",\"password\":\"123456\"}";
-	//	String str = "{\"deviceId\":\"79802537\",\"deviceType\":\"ios\",\"cityLcode\":\"320400\",\"version\":\"1.0.0\",\"clientTime\":\"147987314\",\"id\":\"1\"}";
+		String str = "{\"deviceId\":\"79802537\",\"deviceType\":\"ios\",\"cityLcode\":\"320400\",\"version\":\"1.0.0\",\"clientTime\":\"147987314\",\"id\":\"1\"}";
 	//	String str = "{\"deviceId\":\"79802537\",\"deviceType\":\"ios\",\"cityLcode\":\"320400\",\"version\":\"1.0.0\",\"clientTime\":\"147987314\",\"currentPage\":1,\"pageSize\":1}";
-		String str = "{\"deviceId\":\"79802537\",\"deviceType\":\"ios\",\"cityLcode\":\"320400\",\"version\":\"1.0.0\",\"clientTime\":\"147987314\",\"method\":\"1\"}";
+	//	String str = "{\"deviceId\":\"79802537\",\"deviceType\":\"ios\",\"cityLcode\":\"320400\",\"version\":\"1.0.0\",\"clientTime\":\"147987314\",\"method\":\"1\"}";
 		System.out.println("----加密前-----：" + str);
 		
 		String encodeStr = Des3Util.encode(str);
